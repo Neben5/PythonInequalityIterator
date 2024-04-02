@@ -65,3 +65,7 @@ Note that these will need to be in the same directory together to work out of th
 Acknowledgements to come
 
 Inequalities currently must have two (2) elements. Adding more complex statements is currently in progress and not supported. At all.
+
+# TODO
+
+Fill hemi, dotted outline. Want to be able to see overlap. Boundary is no more important than the interior

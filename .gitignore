@@ -1,3 +1,5 @@
 *.png
 *.pdf
+*.ineq
+*.ipynb
 __pycache__

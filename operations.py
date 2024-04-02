@@ -149,9 +149,12 @@ def plot_hemi(hemi, **kwargs):
 
     Args:
         hemi (np.ndarray[float, float]): list of hemihedra vertices.
-        color (string): matplotlib args for color and such
+        drawSet (string): matplotlib args for color and such
     """
-    color = kwargs.get("color")
+    color = kwargs.get("color") or 'k'
+    line = kwargs.get("line") or '-'
+    opacity = kwargs.get("opacity") or 1
+    point = kwargs.get("point") or 'o'
     if (len(hemi) > 2):
         try:
             hull = scipy.spatial.ConvexHull(hemi)
@@ -160,20 +163,24 @@ def plot_hemi(hemi, **kwargs):
             #     surfacepoints.append(hull.points[vertexIndex])
             # plt.plot(surfacepoints[:,0], surfacepoints[:,1], 'o')
             plt.plot(hull.points[hull.vertices, 0],
-                     hull.points[hull.vertices, 1], color + 'o', lw=2)
+                     hull.points[hull.vertices, 1], color+point, lw=2)
 
-            for simplex in hull.simplices:
+            # for simplex in hull.simplices:
 
-                plt.plot(hull.points[simplex, 0],
-                         hull.points[simplex, 1], color + '-')
+                # plt.plot(hull.points[simplex, 0],
+                #          hull.points[simplex, 1], color + line)
+            plt.plot(hull.points[hull.vertices, 0], hull.points[hull.vertices, 1], color + line)
+            # plt.plot(hull.points[hull.vertices[-1]], hull.points[hull.vertices[0]], color + line)
+
+            plt.fill(hull.points[hull.vertices,0], hull.points[hull.vertices,1], color + line, alpha=opacity)
         except scipy.spatial.QhullError:
             # TODO log dimensionality exception
-            plt.plot(hemi[:, 0], hemi[:, 1], color + 'o-')
+            plt.plot(hemi[:, 0], hemi[:, 1], color+line)
 
     elif (len(hemi) == 2):
-        plt.plot(hemi[:, 0], hemi[:, 1], color + 'o-')
+        plt.plot(hemi[:, 0], hemi[:, 1], color + point + line)
     else:
-        plt.plot(hemi[:, 0], hemi[:, 1], color + 'o')
+        plt.plot(hemi[:, 0], hemi[:, 1], color + point)
 
 
 def sort_vertices(polygon):
